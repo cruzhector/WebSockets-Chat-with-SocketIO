@@ -62,6 +62,7 @@
         autocomplete="off"
         placeholder="Nick name"
       /><button>Save</button>
+      <span id="name-holder" style="margin-left: 20px"></span>
     </form>
     <ul id="messages"></ul>
     <p id="type-msg" style="position: fixed; left: 0; right: 0"></p>
@@ -78,15 +79,21 @@
       var nickName = document.getElementById("nick-name-form");
       var input = document.getElementById("input");
       var typeMsg = document.getElementById("type-msg");
+      var nameHolder = document.getElementById("name-holder");
 
       var nickNameTxt = document.getElementById("nick-name");
-
+      nameHolder.innerHTML = localStorage.getItem("nick-name")
+        ? `${localStorage.getItem("nick-name")} is your nick name`
+        : "";
       nickName.addEventListener("submit", function (e) {
         e.preventDefault();
         if (nickNameTxt.value) {
           localStorage.setItem("nick-name", nickNameTxt.value);
           socket.emit("nick-name", nickNameTxt.value);
           nickNameTxt.value = "";
+          nameHolder.innerHTML = `${localStorage.getItem(
+            "nick-name"
+          )} is your nick name`;
         }
       });
 
